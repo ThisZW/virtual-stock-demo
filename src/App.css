@@ -1,33 +1,31 @@
-.App {
-  text-align: center;
+.layout{
+  color: black;
+  font-size: 1.4em
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.page-title{
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.share, .history{
+  padding: 15px 0px;
+  border-bottom: 1px solid #aaa
 }
 
-.App-link {
-  color: #61dafb;
+.share .price{
+  float: right
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.portfolio-middle-line{
+  border-right: 1px solid #aaa;
+}
+
+.form{
+  border-radius: 5px;
+  text-align: center
+}
+
+.form > *{
+  margin: 5px !important
 }
