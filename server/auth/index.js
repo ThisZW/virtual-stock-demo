@@ -1,23 +1,15 @@
+const expressJwt = require("express-jwt");
+const jwt = require("jsonwebtoken")
+const { secretKey } = require('../constants');
 
-const passport = require("passport");
-const passportJWT = require("passport-jwt");
+const jwtAuth = expressJwt({secret: secretKey}).unless({path: ["/api/user/login", "/api/user/register"]}); 
 
-const ExtractJwt = passportJWT.ExtractJwt;
-const JwtStrategy = passportJWT.Strategy;
+const getToken = (email) =>{
+  return jwt.sign({
+    name: email,
+  }, secretKey ,{
+    expiresIn: 360000
+  })
+}
 
-let jwtOptions = {}
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = "THISISSOMERANDOMSECRETKEYJUSTFORTHISCUTEANDTINYJSONWEBTOKEN";
-
-const strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-  console.log('payload received', jwt_payload);
-  // usually this would be a database call:
-  var user = users.find(user => user.id === jwt_payload.id);
-  if (user) {
-    next(null, user);
-  } else {
-    next(null, false);
-  }
-});
-
-passport.use(strategy);
+module.exports = {jwtAuth, getToken};

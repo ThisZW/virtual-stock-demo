@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb')
 
 const url = 'mongodb://localhost:27017/ttp-test';
 
@@ -16,6 +16,7 @@ const connectDB = (cb) => {
 }
 
 const getDB = () => _db
+
 const disconnectDB = () => _db.close()
 
 module.exports = {connectDB, getDB, disconnectDB}

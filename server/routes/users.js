@@ -1,22 +1,36 @@
 const express = require('express');
-const { inspect } = require('util')
 const router = express.Router();
-const db = require('../db');
+const { login, register } = require('../models/user')
+const { jwtAuth, getToken} = require('../auth')
 
-/* GET users listing. */
-router.get('/test', async (req, res, next) => {
-  res.json({'user': await getUser()})
-});
+router.use(jwtAuth)
 
-const getUser = async() => {
-  const dbres = db.getDB()
-  let res 
-  try { 
-    res = await dbres.collection('users').findOne({email: 'testEmail'})
-    return res
-  } catch (e) {
-    throw e
-  }
-}
+router.post('/login', (req, res, next) => {
+  const { email, password } = req.body
+  login(email, password)
+  .then( message => {
+    res.json({
+      success: message,
+      token: getToken(email)
+    })  
+  })
+  .catch( e => {
+    res.status('409').send(`Error: ${e}`)
+  })
+})
+
+router.post('/register', (req, res, next) => {
+  const { email, name, password } = req.body
+  register(email, name, password)
+  .then( message => {
+    res.json({
+      success: message,
+      token: getToken(email)
+    })
+  })
+  .catch( e => {
+    res.status('409').send(`Error: ${e}`)
+  })
+})
 
 module.exports = router;
