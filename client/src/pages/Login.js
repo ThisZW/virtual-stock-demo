@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Row, Col, Input, Button, Icon, Form } from 'antd'
 
 class Login extends Component {
@@ -7,7 +8,7 @@ class Login extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.props.loginUser(values)
       }
     });
   }
@@ -51,6 +52,10 @@ class Login extends Component {
       </Row>
     )
   }
+}
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired
 }
 
 export default Form.create({name: 'login'})(Login)

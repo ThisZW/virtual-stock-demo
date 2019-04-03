@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const { login, register } = require('../models/user')
-const { jwtAuth, getToken} = require('../auth')
+const { getToken } = require('../auth')
 
-router.use(jwtAuth)
+router.get('/test', (req, res) => {
+  console.log(res.locals.user)
+  res.send(res.locals.user)
+})
 
-router.post('/login', (req, res, next) => {
+router.post('/login', (req, res) => {
   const { email, password } = req.body
   login(email, password)
   .then( message => {
@@ -32,5 +35,6 @@ router.post('/register', (req, res, next) => {
     res.status('409').send(`Error: ${e}`)
   })
 })
+
 
 module.exports = router;

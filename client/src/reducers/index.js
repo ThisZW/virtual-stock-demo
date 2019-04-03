@@ -1,10 +1,6 @@
 import { combineReducers } from 'redux'
+import user from './user'
 
 export default combineReducers({
-  defaultReducer
+  user
 })
-
-
-const defaultReducer = (state) => {
-  return state
-}

@@ -18,7 +18,6 @@ const store = createStore(
   applyMiddleware(...middleware)
 )
 
-
 class App extends Component {
   render() {
     return (

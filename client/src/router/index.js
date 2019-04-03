@@ -1,18 +1,45 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import { Register, Login, Portfolio, Transactions} from '../pages'
+import { connect } from 'react-redux'
+import { loginUser, registerUser} from '../actions'
 
 class Routes extends Component {
   render(){
     return(
       [
-        <Route path="/" exact component={Portfolio} />,
-        <Route path="/transactions" component={Transactions} />,
-        <Route path="/login" component={Login} />,
-        <Route path="/register" component={Register} />
+        <Route path="/" exact 
+          render={() =>
+            <Portfolio />
+          } />,
+        <Route path="/transactions"
+          render={() => 
+            <Transactions />
+          } />,
+        <Route path="/login" 
+          render={() => 
+            <Login loginUser={this.props.loginUser}/>
+          } />,
+        <Route path="/register" 
+          render={() => 
+            <Register registerUser={this.props.registerUser}/>
+          } />
       ]
     )
   }
 }
 
-export default Routes
+Routes.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  registerUser: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = state => ({
+  state: state
+})
+
+export default connect(
+  mapStateToProps,
+  { loginUser, registerUser }
+)(Routes)

@@ -6,10 +6,18 @@ const jwtAuth = expressJwt({secret: secretKey}).unless({path: ["/api/user/login"
 
 const getToken = (email) =>{
   return jwt.sign({
-    name: email,
+    name: email
   }, secretKey ,{
     expiresIn: 360000
   })
 }
 
-module.exports = {jwtAuth, getToken};
+const readToken = (token) => {
+  return jwt.verify(token.replace('Bearer ', ''), secretKey, (err, decoded) => {
+    if(err)
+      throw err
+    return decoded.name
+  })
+}
+
+module.exports = {jwtAuth, getToken, readToken};

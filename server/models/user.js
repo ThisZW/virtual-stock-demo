@@ -12,7 +12,7 @@ const login = async (email, password) => {
       }]
     })
     if(!res){
-      throw `User does not exist`
+      throw `Email and Password Does not Match!`
     }
     return `Email ${email} is successfully logged in`
   } catch (e) {
@@ -38,10 +38,26 @@ const register = async (email, name, password) => {
       })
       return `Email ${email} is successfully registered`
     }
-
   } catch (e) {
     throw e
   }
 }
 
-module.exports = { login, register }
+const findUser = async (email) => {
+  try {
+    let users = await getDB().collection('users')
+    let res = await users
+    .findOne({
+      email: email
+    })
+    if(!res){
+      throw `Not found!`
+    } else {
+      return res
+    }
+  } catch (e) {
+    throw e
+  }
+}
+
+module.exports = { login, register, findUser }
