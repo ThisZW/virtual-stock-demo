@@ -30,3 +30,32 @@ export const register = form => {
   })
 }
 
+export const user = () => {
+  return axios.get('/user')
+  .then ( res => {
+    console.log(res.data)
+    return res.data
+  })
+  .catch( e => {
+    throw e.response.data
+  })
+}
+export const cash = () => {
+  return axios.get('/stock/cash')
+  .then( res => {
+    return res.data
+  })
+  .catch( e => {
+    throw e.response.data
+  })
+}
+
+export const portfolio = () => {
+  return axios.get('/stock/portfolio')
+  .then( res => {
+    return res.data
+  })
+  .catch( e => {
+    throw e.response.data
+  })
+}

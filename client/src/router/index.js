@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import { Register, Login, Portfolio, Transactions} from '../pages'
 import { connect } from 'react-redux'
-import { loginUser, registerUser} from '../actions'
+import { loginUser, registerUser, checkUser } from '../actions'
 
 class Routes extends Component {
+  
   render(){
     return(
       [
@@ -33,6 +34,7 @@ class Routes extends Component {
 Routes.propTypes = {
   loginUser: PropTypes.func.isRequired,
   registerUser: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({

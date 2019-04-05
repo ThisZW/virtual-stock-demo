@@ -30,10 +30,21 @@ const userRegisterFail = payload => ({
   payload
 })
 
+const userCheckLogin = () => ({
+  type: types.TOKEN_RECEIVE,
+})
+
+const userIsLoggedIn = (payload) => ({
+  type: types.TOKEN_VERIFY,
+  payload
+})
+
+const userIsNotLoggedIn = () => ({
+  type: types.TOKEN_RECEIVE,
+})
+
 //actions for login
 export const loginUser = form => (dispatch, getState) => {
-  console.log('here')
-  console.log(getState())
   dispatch(userLogin)
   apis.login(form)
   .then( res => {
@@ -45,7 +56,6 @@ export const loginUser = form => (dispatch, getState) => {
 }
 
 export const registerUser = form => (dispatch, getState) => {
-  console.log(getState())
   dispatch(userRegister)
   apis.login(form)
   .then(res => {
@@ -53,5 +63,17 @@ export const registerUser = form => (dispatch, getState) => {
   })
   .catch( e => {
     dispatch(userRegisterFail(e))
+  })
+}
+
+export const checkUser = () => (dispatch, getState) => {
+  dispatch(userCheckLogin())
+  apis.user()
+  .then(res => {
+    dispatch(userIsLoggedIn(res))
+  })
+  .catch(e => {
+    dispatch(userIsNotLoggedIn())
+    throw e
   })
 }

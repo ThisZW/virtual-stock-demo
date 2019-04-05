@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { checkUser } from '../actions'
 import { Layout, Menu } from 'antd'
 import Routes from '../router'
 import {  BrowserRouter as Router, Link } from 'react-router-dom'
+
 const { Header, Footer, Content } = Layout
 
 const styles = {
@@ -27,8 +30,23 @@ const styles = {
   }
 }
 
-export default class AppLayout extends Component{
+class AppLayout extends Component{
+  
+  constructor(){
+    super()
+    this.state = this.props
+  }
+
+  componentDidMount(){
+    this.props.checkUser()
+  }
+
+  componentWillReceiveProps(props){
+    this.setState = {...props}
+  }
+
   render() {
+    console.log('state and props', this.state, this.props)
     return (
       <Layout className="layout">
         <Router>
@@ -41,8 +59,13 @@ export default class AppLayout extends Component{
             >
               <Menu.Item key="portfolio">Portfolio<Link to="/"/></Menu.Item>
               <Menu.Item key="transactions">Transactions<Link to="/transactions" /></Menu.Item>
-              <Menu.Item style={styles.user} key="register">Register <Link to="/register" /></Menu.Item>
-              <Menu.Item style={styles.user} key="login">Login <Link to="/login" /></Menu.Item>
+              {this.props.isLoggedIn ?[
+                  <Menu.Item style={styles.user} key="register">Register <Link to="/register" /></Menu.Item>,
+                  <Menu.Item style={styles.user} key="login">Login <Link to="/login" /></Menu.Item>
+                ]:[
+                  <Menu.Item style={styles.user} key="Welcome">Welcome! {this.state.name} </Menu.Item>,
+                ]
+              }
             </Menu>
           </Header>
           <Content>
@@ -55,3 +78,12 @@ export default class AppLayout extends Component{
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  ...state.user.user
+})
+
+export default connect(
+  mapStateToProps, 
+  { checkUser }
+)(AppLayout)

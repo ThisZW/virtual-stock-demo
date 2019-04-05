@@ -1,11 +1,18 @@
 import { 
   LOGIN_REQUEST, LOGIN_SUCCEED, LOGIN_FAIL, 
-  REGISTER_FAIL, REGISTER_SUCCEED, REGISTER_REQUEST 
+  REGISTER_FAIL, REGISTER_SUCCEED, REGISTER_REQUEST, 
+  TOKEN_RECEIVE, TOKEN_VERIFY, TOKEN_REJECT
 } from '../constants'
 import { combineReducers } from 'redux';
 
 const initialState = {
   status: '',
+}
+
+const initUser = {
+  isLoggedIn: true,
+  email: '',
+  name: '',
 }
 
 const login = (state = initialState, {type, payload} ) => {
@@ -54,7 +61,26 @@ const register = (state = initialState, {type, payload} ) => {
   }
 }
 
+const user = (state = initUser, {type, payload} ) => {
+  switch(type){
+    case TOKEN_RECEIVE:
+      return state
+    case TOKEN_VERIFY:
+      return {
+        ...state,
+        isLoggedIn: true,
+        email: payload.email,
+        name: payload.name
+      }
+    case TOKEN_REJECT:
+      return initUser
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   login,
   register,
+  user,
 })

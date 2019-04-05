@@ -13,3 +13,4 @@ export const BUY_SHARE_FAIL = 'BUY_SHARE_FAIL'
 
 export const TOKEN_RECEIVE = 'TOKEN_RECEIVE'
 export const TOKEN_VERIFY = 'TOKEN_VERIFY'
+export const TOKEN_REJECT = 'TOKEN_REJECT'

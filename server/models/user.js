@@ -47,17 +47,25 @@ const findUser = async (email) => {
   try {
     let users = await getDB().collection('users')
     let res = await users
-    .findOne({
-      email: email
-    })
+    .aggregate([
+      {$match: {
+        email: email
+      }},
+      {$project: {
+        email: 1,
+        name: 1
+      }}
+    ]).toArray()
     if(!res){
       throw `Not found!`
     } else {
-      return res
+      return res[0]
     }
   } catch (e) {
     throw e
   }
 }
+
+
 
 module.exports = { login, register, findUser }

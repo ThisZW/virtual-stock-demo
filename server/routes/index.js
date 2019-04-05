@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const user = require('./user')
+const stock = require('./stock')
 const { jwtAuth, readToken } = require('../auth')
 const { findUser } = require('../models/user')
 router.use(jwtAuth)
@@ -15,6 +16,8 @@ router.use( async (req, res, next) => {
 })
 
 router.use('/api/user', user)
+
+router.use('/api/stock', stock)
 
 router.use((req, res, next) => {
   let err = new Error('Not Found');
