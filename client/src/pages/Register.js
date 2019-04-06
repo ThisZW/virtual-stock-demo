@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Input, Button, Form, Icon } from 'antd'
+import { Row, Col, Input, Button, Form, Icon, Alert } from 'antd'
 
 class Register extends Component {
 
@@ -14,13 +14,15 @@ class Register extends Component {
 
   render(){
     const { getFieldDecorator } = this.props.form;
+    const { isLoggedIn, message } = this.props;
     return(
       <Row justify="space-around" type="flex">
         <Col span={8} className="form login">
+          { !isLoggedIn ?
           <Form onSubmit={this.handleSubmit}>
             <h2 className="title">Register</h2>
             <Form.Item>
-              {getFieldDecorator('username', {
+              {getFieldDecorator('name', {
                 rules: [
                   {required: true, message: "Please type your username"},
                 ]
@@ -58,7 +60,27 @@ class Register extends Component {
               )}
             </Form.Item>
             <Button block htmlType="submit" size="large">Login</Button>
-          </Form>
+          </Form>:
+          (
+            //alert for success/failure
+            console.log('message', message.type == "login success"),
+            [message.type == "register success" && ( 
+            <Alert
+              message="Success"
+              description={message.status}
+              type="success"
+              showIcon
+            /> ),
+            message.type == "" && (
+            <Alert
+              message="Warning"
+              description="This account is already logged in"
+              type="warning"
+              showIcon
+            />)]
+          )
+          }
+          
         </Col>
       </Row>
     )

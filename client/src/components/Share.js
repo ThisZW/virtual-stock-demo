@@ -3,11 +3,12 @@ import { Row, Col, Button } from 'antd'
 
 export default class Share extends Component {
   render(){
+    const {symbol, quantity} = this.props
     return(
       <Row className="share">
         <Col span={16}>
           <div>
-            APPL - 6 Shares
+            {symbol} - {quantity} Shares
           </div>
         </Col>
         <Col span={8}>

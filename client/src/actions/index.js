@@ -43,12 +43,24 @@ const userIsNotLoggedIn = () => ({
   type: types.TOKEN_RECEIVE,
 })
 
+const userLogout = () => ({
+  type: types.LOGOUT_REQUEST
+})
+
+const userLogoutSucceed = () => ({
+  type: types.LOGOUT_SUCCEED
+})
+
 //actions for login
 export const loginUser = form => (dispatch, getState) => {
   dispatch(userLogin)
   apis.login(form)
   .then( res => {
     dispatch(userLoginSucceed(res))
+    apis.user()
+    .then(res => {
+      dispatch(userIsLoggedIn(res))
+    })
   })
   .catch( e => {
     dispatch(userLoginFail(e))
@@ -57,9 +69,13 @@ export const loginUser = form => (dispatch, getState) => {
 
 export const registerUser = form => (dispatch, getState) => {
   dispatch(userRegister)
-  apis.login(form)
+  apis.register(form)
   .then(res => {
     dispatch(userRegisterSucceed(res))
+    apis.user()
+    .then(res => {
+      dispatch(userIsLoggedIn(res))
+    })
   })
   .catch( e => {
     dispatch(userRegisterFail(e))
@@ -76,4 +92,9 @@ export const checkUser = () => (dispatch, getState) => {
     dispatch(userIsNotLoggedIn())
     throw e
   })
+}
+
+export const logout = () => (dispatch, getState) => {
+  dispatch(userLogout())
+  dispatch(userLogoutSucceed())
 }

@@ -34,7 +34,9 @@ const register = async (email, name, password) => {
         name: name,
         email: email,
         password: md5(password),
-        cash: defaultCash
+        cash: defaultCash,
+        portfolio: {},
+        transactions: []
       })
       return `Email ${email} is successfully registered`
     }

@@ -5,40 +5,37 @@ import { Register, Login, Portfolio, Transactions} from '../pages'
 import { connect } from 'react-redux'
 import { loginUser, registerUser, checkUser } from '../actions'
 
-class Routes extends Component {
-  
-  render(){
-    return(
-      [
-        <Route path="/" exact 
-          render={() =>
-            <Portfolio />
-          } />,
-        <Route path="/transactions"
-          render={() => 
-            <Transactions />
-          } />,
-        <Route path="/login" 
-          render={() => 
-            <Login loginUser={this.props.loginUser}/>
-          } />,
-        <Route path="/register" 
-          render={() => 
-            <Register registerUser={this.props.registerUser}/>
-          } />
-      ]
-    )
-  }
+const Routes = ({ user, message, loginUser, registerUser }) => {
+  const { isLoggedIn } = user
+  return(
+    [
+      <Route path="/" exact 
+        render={() =>
+          <Portfolio isLoggedIn={isLoggedIn}/>
+        } />,
+      <Route path="/transactions"
+        render={() => 
+          <Transactions isLoggedIn={isLoggedIn}/>
+        } />,
+      <Route path="/login" 
+        render={() => 
+          <Login loginUser={loginUser} isLoggedIn={isLoggedIn} message={message}/>
+        } />,
+      <Route path="/register" 
+        render={() => 
+          <Register registerUser={registerUser} isLoggedIn={isLoggedIn} message={message}/>
+        } />  
+    ]
+  )
 }
 
 Routes.propTypes = {
   loginUser: PropTypes.func.isRequired,
   registerUser: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
-  state: state
+  ...state
 })
 
 export default connect(

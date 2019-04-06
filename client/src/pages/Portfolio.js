@@ -2,18 +2,41 @@ import React, { Component } from 'react'
 import { Row, Col, Button } from 'antd'
 import { Share } from '../components'
 import { BuyShare } from '../components'
+import { getPortfolio, getCash, getStockQuotes } from '../apis'
 
 class Portfolio extends Component {
+
+  constructor(){
+    super()
+    this.state = {
+      portfolio: {},
+      cash: 0
+    }
+  }
+
+  componentDidMount = async() => {
+    const portfolio = await getPortfolio()
+    const cash = await getCash()
+    this.setState({
+      portfolio: portfolio,
+      cash: cash
+    })
+  }
+  
   render(){
+    const { portfolio, cash } = this.state
     return(
       <Row>
         <Row>
-          <h1 className="page-title">Portfolio ($4444)</h1>
+          <h1 className="page-title">Portfolio (${cash})</h1>
         </Row>
         <Row type="flex" justify="center">
           <Col span={10}>
-            <Share/>
-            <Share/>
+            {
+              Object.keys(portfolio).map((key) => {
+                return <Share symbol={key} key={key} quantity={portfolio[key]}/>
+              })
+            }
           </Col>
           <Col span={3} className="portfolio-middle-line"></Col>
           <Col span={9} offset={2}>
@@ -23,6 +46,7 @@ class Portfolio extends Component {
       </Row>
     )
   }
+
 }
 
 export default Portfolio

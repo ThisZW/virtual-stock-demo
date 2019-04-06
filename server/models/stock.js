@@ -26,8 +26,21 @@ const getUserPortfolio = async (email) => {
   }
 }
 
-const setUserShare = (email, code, qty) => {
-
+const getUserTransactions = async (email) => {
+  try {
+    let res = await getDB().collection('users')
+    .findOne({email: email})
+    if(!res){
+      throw `Error getting transactions`
+    }
+    return res.transactions
+  } catch (e) {
+    throw e
+  }
 }
 
-module.exports = { getUserCash, getUserPortfolio, setUserShare }
+const setUserShare = (email, code, qty) => {
+  
+}
+
+module.exports = { getUserCash, getUserPortfolio, getUserTransactions, setUserShare }
