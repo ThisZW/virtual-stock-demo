@@ -1,13 +1,15 @@
 import axios from 'axios'
 
-axios.defaults.baseURL= 'https://api.iextrading.com/1.0/stock/'
+axios.defaults.baseURL= '/api'
 
-export const getStockQuote = (symbol) => {
-  return axios.get( symbol + '/quote' )
+export const getStockQuotes = (symbols) =>{
+  const queries = symbols.join('&')
+  console.log(`/iex/quotes?${queries}`)
+  return axios.get(`/iex/quotes?${queries}`)
   .then( res => {
     return res.data
   })
-  .catch( e => {
-    throw e
+  .catch( err => {
+    throw err.response.data
   })
 }

@@ -2,7 +2,14 @@ const expressJwt = require("express-jwt");
 const jwt = require("jsonwebtoken")
 const { secretKey } = require('../constants');
 
-const jwtAuth = expressJwt({secret: secretKey}).unless({path: ["/api/user/login", "/api/user/register"]}); 
+const jwtAuth = expressJwt({secret: secretKey})
+  .unless(
+    { path: [
+      "/api/user/login", 
+      "/api/user/register",
+      "/api/iex/quotes",
+      "/api/iex/quote"
+  ]}); 
 
 const getToken = (email) =>{
   return jwt.sign({

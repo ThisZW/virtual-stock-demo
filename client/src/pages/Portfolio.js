@@ -10,7 +10,8 @@ class Portfolio extends Component {
     super()
     this.state = {
       portfolio: {},
-      cash: 0
+      cash: 0,
+      quotes: {},
     }
   }
 
@@ -21,10 +22,20 @@ class Portfolio extends Component {
       portfolio: portfolio,
       cash: cash
     })
+    this.interval = setInterval( async () => {
+      const keys = Object.keys(portfolio)
+      const quotes = await getStockQuotes(keys)
+      this.setState({quotes : quotes})
+    },
+    2000);
   }
   
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   render(){
-    const { portfolio, cash } = this.state
+    const { portfolio, cash, quotes } = this.state
     return(
       <Row>
         <Row>
@@ -34,13 +45,19 @@ class Portfolio extends Component {
           <Col span={10}>
             {
               Object.keys(portfolio).map((key) => {
-                return <Share symbol={key} key={key} quantity={portfolio[key]}/>
+                console.log(key, quotes[key])
+                return <Share 
+                symbol={key}
+                key={key}
+                quantity={portfolio[key]}
+                {...quotes[key]}
+                />
               })
             }
           </Col>
           <Col span={3} className="portfolio-middle-line"></Col>
           <Col span={9} offset={2}>
-            <BuyShare/>
+            <BuyShare cash={cash} />
           </Col>
         </Row>
       </Row>

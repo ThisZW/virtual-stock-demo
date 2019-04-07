@@ -3,7 +3,7 @@ import { Row, Col, Button } from 'antd'
 
 export default class Share extends Component {
   render(){
-    const {symbol, quantity} = this.props
+    const {symbol, quantity, openPrice, latestPrice} = this.props
     return(
       <Row className="share">
         <Col span={16}>
@@ -13,7 +13,7 @@ export default class Share extends Component {
         </Col>
         <Col span={8}>
           <div className="price">
-            $666
+            {latestPrice ? `$${latestPrice}` : 'loading...'}
           </div>
         </Col>
       </Row>
