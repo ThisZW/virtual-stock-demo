@@ -9,7 +9,7 @@ export default class History extends Component {
       <Row type="flex" justify="start">
         <Col span={14} className="history">
           <div>
-            {type} ({symbol}) - {quantity} Shares @ {price}, &nbsp;&nbsp;
+            {type} ({symbol}) - {quantity} Shares @ ${price}, &nbsp;&nbsp;
             <Moment format="MM/DD/YYYY HH:mm">{date}</Moment>
           </div>
         </Col>

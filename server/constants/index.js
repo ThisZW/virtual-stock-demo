@@ -7,5 +7,5 @@ module.exports = {
     return md5.update(pwd).digest('hex');
   },
   secretKey: 'IAMARANDOMSECRETKEYFORNOTHING',
-  defaultCash: 5000
+  defaultCash: "5000.00"
 };

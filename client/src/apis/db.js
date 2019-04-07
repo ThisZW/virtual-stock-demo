@@ -70,3 +70,13 @@ export const getTransactions = () => {
     throw e.response
   })
 }
+
+export const buyStock = form => {
+  return axios.post('/stock/buy', form)
+  .then( res => {
+    return res.data
+  })
+  .catch( e => {
+    throw e.response.data
+  })
+}

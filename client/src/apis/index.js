@@ -5,10 +5,12 @@ import {
   getPortfolio,
   getTransactions,
   getCash,
+  buyStock,
 } from './db'
 
 import {
-  getStockQuotes
+  getStockQuotes,
+  getStockQuote
 } from './iex'
 
 export {
@@ -18,5 +20,7 @@ export {
   getPortfolio,
   getTransactions,
   getCash,
-  getStockQuotes
+  getStockQuotes,
+  getStockQuote,
+  buyStock
 }

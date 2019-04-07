@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getStockQuotes } = require('../api/iex')
+const { getStockQuotes, getStockQuote } = require('../api/iex')
 
 router.get('/quotes', async(req, res) => {
   const keys = Object.keys(req.query)
@@ -8,8 +8,8 @@ router.get('/quotes', async(req, res) => {
   res.json(data)
 })
 
-router.get('/quote/:symbol', async(req, res) => {
-  const key = req.params.symbol
+router.get('/quote', async(req, res) => {
+  const key = req.query.symbol
   const data = await getStockQuote(key)
   res.json(data)
 })

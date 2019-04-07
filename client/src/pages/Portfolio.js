@@ -12,12 +12,14 @@ class Portfolio extends Component {
       portfolio: {},
       cash: 0,
       quotes: {},
+      portfolioTotal: 0
     }
   }
 
   componentDidMount = async() => {
     const portfolio = await getPortfolio()
     const cash = await getCash()
+    console.log(cash)
     this.setState({
       portfolio: portfolio,
       cash: cash
@@ -25,9 +27,21 @@ class Portfolio extends Component {
     this.interval = setInterval( async () => {
       const keys = Object.keys(portfolio)
       const quotes = await getStockQuotes(keys)
-      this.setState({quotes : quotes})
+      let total = this.state.cash
+      Object.keys(quotes).forEach( key =>{
+        console.log(quotes[key].latestPrice, portfolio[key])
+        total += quotes[key].latestPrice * portfolio[key]
+      })
+      this.setState({
+        quotes : quotes,
+        portfolioTotal : total
+      })
     },
     2000);
+  }
+
+  setPortfolioTotal = async(portfolio, cash) => {
+    
   }
   
   componentWillUnmount() {
@@ -35,17 +49,16 @@ class Portfolio extends Component {
   }
 
   render(){
-    const { portfolio, cash, quotes } = this.state
+    const { portfolio, cash, quotes, portfolioTotal } = this.state
     return(
       <Row>
         <Row>
-          <h1 className="page-title">Portfolio (${cash})</h1>
+          <h1 className="page-title">Portfolio (${portfolioTotal.toFixed(2)})</h1>
         </Row>
         <Row type="flex" justify="center">
           <Col span={10}>
             {
               Object.keys(portfolio).map((key) => {
-                console.log(key, quotes[key])
                 return <Share 
                 symbol={key}
                 key={key}

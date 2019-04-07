@@ -63,7 +63,6 @@ class Register extends Component {
           </Form>:
           (
             //alert for success/failure
-            console.log('message', message.type == "login success"),
             [message.type == "register success" && ( 
             <Alert
               message="Success"

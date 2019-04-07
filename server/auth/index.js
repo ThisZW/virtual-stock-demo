@@ -4,17 +4,21 @@ const { secretKey } = require('../constants');
 
 const jwtAuth = expressJwt({secret: secretKey})
   .unless(
-    { path: [
-      "/api/user/login", 
-      "/api/user/register",
-      "/api/iex/quotes",
-      "/api/iex/quote"
-  ]}); 
+    { 
+      path: 
+      [
+        "/api/user/login", 
+        "/api/user/register",
+        "/api/iex/quotes",
+        "/api/iex/quote"
+      ]
+    }
+  ); 
 
 const getToken = (email) =>{
   return jwt.sign({
     name: email
-  }, secretKey ,{
+  }, secretKey, {
     expiresIn: 360000
   })
 }

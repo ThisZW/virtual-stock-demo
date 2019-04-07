@@ -1,4 +1,4 @@
-const { getDB } = require('../db')
+const { getDB, Decimal128 } = require('../db')
 const { md5, defaultCash } = require('../constants')
 
 const login = async (email, password) => {
@@ -34,7 +34,7 @@ const register = async (email, name, password) => {
         name: name,
         email: email,
         password: md5(password),
-        cash: defaultCash,
+        cash: Decimal128.fromString(defaultCash),
         portfolio: {},
         transactions: []
       })

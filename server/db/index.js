@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb')
+const { MongoClient, Decimal128} = require('mongodb')
 
 const url = 'mongodb://localhost:27017/ttp-test';
 
@@ -19,4 +19,4 @@ const getDB = () => _db
 
 const disconnectDB = () => _db.close()
 
-module.exports = {connectDB, getDB, disconnectDB}
+module.exports = {connectDB, getDB, disconnectDB, Decimal128}
