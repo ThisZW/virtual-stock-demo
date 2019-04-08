@@ -19,7 +19,7 @@ router.post('/login', (req, res) => {
     })  
   })
   .catch( e => {
-    res.status('409').send(`Error: ${e}`)
+    res.status(409).send(`Error: ${e}`)
   })
 })
 
@@ -34,7 +34,7 @@ router.post('/register', (req, res, next) => {
     })
   })
   .catch( e => {
-    res.status('409').send(`Error: ${e}`)
+    res.status(409).send(`Error: ${e}`)
   })
 })
 

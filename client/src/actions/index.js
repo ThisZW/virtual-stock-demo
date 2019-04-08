@@ -1,4 +1,4 @@
-
+ 
 import * as types from '../constants'
 import * as apis from '../apis'
 
@@ -40,7 +40,7 @@ const userIsLoggedIn = (payload) => ({
 })
 
 const userIsNotLoggedIn = () => ({
-  type: types.TOKEN_RECEIVE,
+  type: types.TOKEN_REJECT,
 })
 
 const userLogout = () => ({
@@ -78,6 +78,7 @@ export const registerUser = form => (dispatch, getState) => {
     })
   })
   .catch( e => {
+    console.log('error', e)
     dispatch(userRegisterFail(e))
   })
 }
@@ -89,7 +90,7 @@ export const checkUser = () => (dispatch, getState) => {
     dispatch(userIsLoggedIn(res))
   })
   .catch(e => {
-    dispatch(userIsNotLoggedIn())
+    dispatch(userIsNotLoggedIn(e))
     throw e
   })
 }

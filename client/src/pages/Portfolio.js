@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Button } from 'antd'
+import { Row, Col, Alert, Spin } from 'antd'
 import { Share } from '../components'
 import { BuyShare } from '../components'
 import { getPortfolio, getCash, getStockQuotes } from '../apis'
@@ -12,14 +12,16 @@ class Portfolio extends Component {
       portfolio: {},
       cash: 0,
       quotes: {},
-      portfolioTotal: 0
+      portfolioTotal: 0,
     }
   }
 
   componentDidMount = async() => {
+    this.setState({
+      pageIsLoading: false,
+    })
     const portfolio = await getPortfolio()
     const cash = await getCash()
-    console.log(cash)
     this.setState({
       portfolio: portfolio,
       cash: cash
@@ -29,7 +31,6 @@ class Portfolio extends Component {
       const quotes = await getStockQuotes(keys)
       let total = this.state.cash
       Object.keys(quotes).forEach( key =>{
-        console.log(quotes[key].latestPrice, portfolio[key])
         total += quotes[key].latestPrice * portfolio[key]
       })
       this.setState({
@@ -39,10 +40,6 @@ class Portfolio extends Component {
     },
     2000);
   }
-
-  setPortfolioTotal = async(portfolio, cash) => {
-    
-  }
   
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -51,21 +48,28 @@ class Portfolio extends Component {
   render(){
     const { portfolio, cash, quotes, portfolioTotal } = this.state
     return(
+      this.props.isPageLoading ?
+      <Row type="flex" justify="center">
+        <Spin size="large" />
+      </Row> 
+      :
+      (this.props.isLoggedIn ?
       <Row>
         <Row>
           <h1 className="page-title">Portfolio (${portfolioTotal.toFixed(2)})</h1>
         </Row>
         <Row type="flex" justify="center">
           <Col span={10}>
-            {
+            { Object.entries(portfolio).length > 0 ?
               Object.keys(portfolio).map((key) => {
                 return <Share 
-                symbol={key}
-                key={key}
-                quantity={portfolio[key]}
-                {...quotes[key]}
-                />
-              })
+                        symbol={key}
+                        key={key}
+                        quantity={portfolio[key]}
+                        {...quotes[key]}
+                      />
+              }) :
+              <h5>Start with buying your first stock on the right.</h5>
             }
           </Col>
           <Col span={3} className="portfolio-middle-line"></Col>
@@ -73,7 +77,13 @@ class Portfolio extends Component {
             <BuyShare cash={cash} />
           </Col>
         </Row>
-      </Row>
+      </Row>:
+      <Alert
+        message="Warning"
+        description="Please Log in first"
+        type="warning"
+        showIcon
+      />)
     )
   }
 

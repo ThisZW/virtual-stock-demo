@@ -9,6 +9,9 @@ class Login extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.props.loginUser(values)
+        setTimeout(()=>{
+          window.location.href = "/"
+        }, 3000)
       }
     });
   }
@@ -62,15 +65,15 @@ class Login extends Component {
           </Form> :
           (
             //alert for success/failure
-            console.log('message', message.type == "login success"),
-            [message.type == "login success" && ( 
+            console.log('message', message.type === "login success"),
+            [message.type === "login success" && ( 
             <Alert
               message="Success"
-              description={message.status}
+              description={`${message.status}, this page will reload in 3 seconds`}
               type="success"
               showIcon
             /> ),
-            message.type == "" && (
+            message.type === "" && (
             <Alert
               message="Warning"
               description="This account is already logged in"

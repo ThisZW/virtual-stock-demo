@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Button } from 'antd'
+import { Row, Col, Icon } from 'antd'
 
 export default class Share extends Component {
   render(){
@@ -22,7 +22,7 @@ export default class Share extends Component {
         </Col>
         <Col span={8}>
           <div className="price">
-            {latestPrice ? `$${latestPrice}` : 'loading...'}
+            {latestPrice ? `$${latestPrice}` : <Icon type="loading" style={{ fontSize: 24 }} spin />}
           </div>
         </Col>
       </Row>

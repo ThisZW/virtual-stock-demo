@@ -8,6 +8,9 @@ class Register extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.props.registerUser(values)
+        setTimeout(()=>{
+          window.location.href = "/"
+        }, 3000)
       }
     });
   }
@@ -21,6 +24,15 @@ class Register extends Component {
           { !isLoggedIn ?
           <Form onSubmit={this.handleSubmit}>
             <h2 className="title">Register</h2>
+            {
+              message.type === 'register error' &&
+              <Alert
+                message="Failed"
+                description={message.status}
+                type="error"
+                showIcon
+              />
+            }
             <Form.Item>
               {getFieldDecorator('name', {
                 rules: [
@@ -59,18 +71,18 @@ class Register extends Component {
                 />
               )}
             </Form.Item>
-            <Button block htmlType="submit" size="large">Login</Button>
+            <Button block htmlType="submit" size="large">Register</Button>
           </Form>:
           (
             //alert for success/failure
-            [message.type == "register success" && ( 
+            [message.type === "register success" && ( 
             <Alert
               message="Success"
               description={message.status}
               type="success"
               showIcon
             /> ),
-            message.type == "" && (
+            message.type === "" && (
             <Alert
               message="Warning"
               description="This account is already logged in"

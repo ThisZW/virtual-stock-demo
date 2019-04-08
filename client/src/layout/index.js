@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { checkUser, logout } from '../actions'
 import { Layout, Menu } from 'antd'
 import Routes from '../router'
 import {  BrowserRouter as Router, Link } from 'react-router-dom'
 
-const { Header, Footer, Content } = Layout
+const { Header, Content } = Layout
 
 const styles = {
   title: {
@@ -30,12 +30,12 @@ const styles = {
   }
 }
 
-const AppLayout = ({isLoggedIn, name, checkUser, logout}) =>{
+const AppLayout = ({isLoggedIn, isPageLoading, name, checkUser, logout}) =>{
 
-  if(!isLoggedIn) {
+  if(isPageLoading) {
     checkUser()
   }
-  
+
   return (
     <Layout className="layout">
       <Router>
@@ -54,7 +54,6 @@ const AppLayout = ({isLoggedIn, name, checkUser, logout}) =>{
               ]:[
                 <Menu.Item style={styles.user} key="logout" onClick={() => logout()}> Logout </Menu.Item>,
                 <Menu.Item style={styles.user} key="Welcome">Welcome! {name} </Menu.Item>
-                
               ]
             }
           </Menu>

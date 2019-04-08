@@ -3,19 +3,19 @@ import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import { Register, Login, Portfolio, Transactions} from '../pages'
 import { connect } from 'react-redux'
-import { loginUser, registerUser, checkUser } from '../actions'
+import { loginUser, registerUser} from '../actions'
 
 const Routes = ({ user, message, loginUser, registerUser }) => {
-  const { isLoggedIn } = user
+  const { isLoggedIn, isPageLoading } = user
   return(
     [
       <Route path="/" exact 
         render={() =>
-          <Portfolio isLoggedIn={isLoggedIn}/>
+          <Portfolio isLoggedIn={isLoggedIn} isPageLoading={isPageLoading}/>
         } />,
       <Route path="/transactions"
         render={() => 
-          <Transactions isLoggedIn={isLoggedIn}/>
+          <Transactions isLoggedIn={isLoggedIn} isPageLoading={isPageLoading}/>
         } />,
       <Route path="/login" 
         render={() => 

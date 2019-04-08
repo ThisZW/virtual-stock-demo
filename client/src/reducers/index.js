@@ -14,6 +14,7 @@ const initialState = {
 }
 
 const initUser = {
+  isPageLoading: true,
   isLoggedIn: false,
   email: '',
   name: '',
@@ -31,7 +32,7 @@ const message = (state = initialState, {type, payload} ) => {
       return {
         ...state,
         type: "login error",
-        status: 'Failed to Log in. ' + payload
+        status: 'Failed to Log in, ' + payload
       }
     case LOGIN_SUCCEED:
       window.localStorage.setItem('token', payload.token)
@@ -50,7 +51,7 @@ const message = (state = initialState, {type, payload} ) => {
       return {
         ...state,
         type: "register error",
-        status: "Failed to register. " + payload
+        status: "Failed to register, " + payload
       }
     case REGISTER_SUCCEED:
       window.localStorage.setItem('token', payload.token)
@@ -72,11 +73,15 @@ const user = (state = initUser, {type, payload} ) => {
       return {
         ...state,
         isLoggedIn: true,
+        isPageLoading: false,
         email: payload.email,
         name: payload.name
       }
     case TOKEN_REJECT:
-      return initUser
+      return {
+        ...initUser,
+        isPageLoading: false
+      }
     case LOGOUT_REQUEST:
       return state
     case LOGOUT_SUCCEED:
