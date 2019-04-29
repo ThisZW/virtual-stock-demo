@@ -8,5 +8,5 @@ A virtual Stock market built by MERN stack (MongoDB, Express, React, Node) that 
 cd server && yarn dev
 #frontend
 cd client && yarn start
-#also make sure that mongodb is install and create a database ttp-test
+#also make sure that mongodb is installed and there should be a db called ttp-test
 ```
