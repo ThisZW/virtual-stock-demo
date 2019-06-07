@@ -9,7 +9,7 @@ export const getStockQuotes = (symbols) =>{
     return res.data
   })
   .catch( err => {
-    throw err.response.data
+    throw err
   })
 }
 
@@ -19,6 +19,6 @@ export const getStockQuote = (symbol) =>{
     return res.data
   })
   .catch( err => {
-    throw err.response.data
+    throw err
   })
 }

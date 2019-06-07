@@ -41,7 +41,9 @@ const getStockQuote = (symbol) => {
     }
   })
   .catch( err => {
-    return err.response.data
+    return {
+      error: err.response.data
+    }
   })
 }
 

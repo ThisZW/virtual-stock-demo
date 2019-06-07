@@ -26,7 +26,7 @@ class BuyShare extends Component{
         alert(res)
         window.location.reload()
       }
-    });
+    })
   }
 
   handleSymbolChange = (e) => {
@@ -40,11 +40,11 @@ class BuyShare extends Component{
         validateSymbol: 'validating'
       }, async () => {
         const quote = await getStockQuote(symbol)
-        if(quote !== "Unknown symbol"){
+        if(!quote.error){
           this.setState({
             validateSymbol: 'success',
             showQuote: true,
-            currentQuote: quote
+            currentQuote: quote 
           })
         }
         else {
@@ -127,10 +127,10 @@ class BuyShare extends Component{
                 transitionName="fade"
                 transitionAppear
               >
-              {currentQuote !== "Unknown symbol" ?
+              {!currentQuote.error?
                 <p>{currentQuote.symbol}: {currentQuote.companyName}, 
                 latest: {currentQuote.latestPrice}, open: {currentQuote.openPrice}</p>:
-                <p> {currentQuote}</p>
+                <p> {currentQuote.error}</p>
               }
               </Animate>
             }
