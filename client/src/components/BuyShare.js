@@ -156,11 +156,16 @@ class BuyShare extends Component{
                 transitionName="fade"
                 transitionAppear
               >
+                { validateSymbol === "success"?
                 <p>This will cost ${price}
                   { validateQty === 'error' &&
                   ", which excceeds your available cash amount."
                 }
+                </p> : 
+                <p>
+                  Input a Valid Symbol first
                 </p>
+                }
               </Animate>
             }
             <Button htmlType="submit" block size="large">Buy Shares</Button>
