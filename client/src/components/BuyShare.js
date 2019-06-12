@@ -171,7 +171,7 @@ class BuyShare extends Component{
             <Button htmlType="submit" block size="large">Buy Shares</Button>
           </Form>
         </Col>
-      </Row>
+       </Row>
     )
   }
 }
