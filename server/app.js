@@ -7,9 +7,11 @@ const http = require('http')
 const indexRouter = require('./routes/index');
 
 const app = express();
-const port = 3003
+const port = process.env.PORT || 3003
 
 const { connectDB } = require( './db' )
+
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use(logger('dev'));
 app.use(express.json());

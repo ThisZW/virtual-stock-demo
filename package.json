@@ -1,0 +1,8 @@
+{
+  "name": "ttp-stock-heroku-deploy",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "node ./server/app.js",
+    "heroku-postbuild": "cd client && yarn && yarn run build"
+  }
+}
