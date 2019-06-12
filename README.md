@@ -4,11 +4,15 @@ A virtual Stock market built by MERN stack (MongoDB, Express, React, Node) that 
 Some extra tools used: Redux, Ant Design, axios, JWT WebToken
 ## Getting Started
 ```bash
+
 # backend
 cd server && yarn dev
+
 # frontend
 cd client && yarn start
+
 # also make sure that mongodb is installed and there should be a db called ttp-test
+
 ```
 
 ## Overview (updated 6/12/2019)
@@ -28,3 +32,6 @@ This is a full-stack demo of a stock web application that allow users to buy sto
 
 ### Register Page
 ![Register](https://github.com/ThisZW/virtual-stock-demo/blob/master/assets/register.png)
+
+## Bugs to be fixed
+ - Missing functionality of dealing with expired JWT token, as they cannot be automatically cleared so far.
