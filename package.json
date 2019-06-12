@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "node ./server/app.js",
-    "heroku-postbuild": "cd client && yarn && yarn build"
+    "heroku-postbuild": "cd client && yarn && yarn build && cd../server && yarn"
   },
   "dependencies": {
     "yarn": "^1.16.0"
