@@ -1,6 +1,6 @@
 const { MongoClient, Decimal128} = require('mongodb')
 
-const url = 'mongodb://localhost:27017/ttp-test';
+const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/ttp-test';
 
 let _db
 
